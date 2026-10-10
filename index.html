@@ -80,16 +80,20 @@ function next(){const list=qs();const i=pos[stage]||0;const q=list[i];
   if(q&&q.type==='email'){const v=(ans.email||'').trim();if(!EMAIL.test(v)){lastErr='';const el=$('#stt');if(el)el.innerHTML='<span class="err">That email doesn\'t look right.</span>';return}}
   flush();pos[stage]=Math.min(i+1,list.length);S('pn_pos',JSON.stringify(pos));render();window.scrollTo(0,0)}
 function back(){const i=pos[stage]||0;pos[stage]=Math.max(0,Math.min(i,qs().length)-1);S('pn_pos',JSON.stringify(pos));render()}
+let dirty=false;
 async function flush(){
   const payload={};for(const s in CFG.QUESTIONS)for(const q of CFG.QUESTIONS[s]){const v=(ans[q.key]||'').trim();if(!v||saved[q.key]===v)continue;if(q.type==='email'&&!EMAIL.test(v))continue;payload[q.key]=v}
-  if(!Object.keys(payload).length||busy)return;busy=true;
-  try{const r=await fetch(base+'/api/answer',{method:'POST',headers:Object.assign({'content-type':'application/json'},TEST?{'x-pn-test':'1'}:{}),cache:'no-store',body:JSON.stringify({pid,answers:payload})});
+  if(!Object.keys(payload).length)return;
+  if(busy){dirty=true;return}
+  busy=true;dirty=false;
+  const ac=new AbortController();const timer=setTimeout(()=>ac.abort(),12000);
+  try{const r=await fetch(base+'/api/answer',{method:'POST',headers:Object.assign({'content-type':'application/json'},TEST?{'x-pn-test':'1'}:{}),cache:'no-store',signal:ac.signal,body:JSON.stringify({pid,answers:payload})});
     if(!r.ok){let e='';try{e=(await r.json()).error||''}catch(x){}throw new Error(e||('HTTP '+r.status))}
     const j=await r.json();for(const k of j.saved)saved[k]=payload[k];if(payload.email&&j.ok)saved.email=payload.email;S('pn_saved',JSON.stringify(saved));
     if(j.code){S('pn_code',j.code);$('#code').textContent='#'+j.code}lastErr='';status()}
-  catch(e){lastErr=(e&&e.message)||'network';status();setTimeout(flush,4000)}
-  finally{busy=false}
+  catch(e){lastErr=(e&&e.name==='AbortError')?'slow connection':((e&&e.message)||'network');status();dirty=true}
+  finally{clearTimeout(timer);busy=false;if(dirty)setTimeout(flush,lastErr?3000:150)}
 }
 async function poll(){try{const r=await fetch(base+'/api/stage',{cache:'no-store'});const j=await r.json();if(j.stage!==stage){stage=j.stage;render();window.scrollTo(0,0)}}catch(e){}setTimeout(poll,3000)}
-poll();setInterval(flush,6000);
+poll();setInterval(flush,4000);
 </script></body></html>
