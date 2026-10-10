@@ -1,0 +1,44 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PN screen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#261E20;--lime:#C4FF02;--pink:#FF4DFF;--violet:#5736F5;--paper:#F6F2F7;--mute:rgba(246,242,247,.55)}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--paper);font:22px/1.3 Arial,Helvetica,sans-serif;overflow:hidden;cursor:none}
+#wrap{position:absolute;left:21.7%;width:56.6%;top:0;bottom:11.8%;padding:40px 24px 20px;display:flex;flex-direction:column}
+@media (max-aspect-ratio: 8/7){#wrap{left:0;width:100%}}
+.kicker{font:28px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.08em;color:var(--lime);margin:0 0 6px}
+h1{font:64px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.02em;margin:0 0 26px;color:var(--paper)}
+.big{font:220px/.9 'Bebas Neue',Arial,sans-serif;color:var(--lime);margin:10px 0 0}
+.vs{font-size:26px;color:var(--mute);margin:8px 0 0}.vs b{color:var(--paper);font-weight:400}
+.row{display:grid;grid-template-columns:1fr 2fr 110px;gap:16px;align-items:center;margin:14px 0;font-size:26px}
+.row .b{height:38px;background:rgba(246,242,247,.12);border-radius:6px}.row .b i{display:block;height:100%;background:var(--violet);border-radius:6px;transition:width .6s}
+.row.hot .b i{background:var(--pink)}.row.lime .b i{background:var(--lime)}.row .n{text-align:right;font:38px/1 'Bebas Neue',Arial,sans-serif}.row .n small{font:18px Arial;color:var(--mute);display:block}
+.pp{display:flex;gap:60px;align-items:flex-end;height:420px;margin-top:20px;padding:0 60px}
+.pp div{flex:1;text-align:center;font-size:26px;color:var(--mute)}.pp .col{border-radius:10px 10px 0 0;margin:0 auto 14px;width:72%;background:var(--violet);transition:height .6s}.pp .post{background:var(--lime)}
+.pp b{display:block;font:110px/1 'Bebas Neue',Arial,sans-serif;color:var(--paper)}
+.foot{margin-top:auto;font-size:20px;color:var(--mute)}
+ul{list-style:none;margin:0;padding:0}li{font-size:30px;line-height:1.3;padding:16px 0;border-top:1px solid rgba(246,242,247,.15)}li:first-child{border-top:0}li::before{content:'“';color:var(--pink);font:60px/0 Georgia,serif;vertical-align:-18px;margin-right:6px}
+#ix{position:absolute;right:12px;bottom:12px;font-size:12px;color:var(--mute)}
+</style></head><body>
+<div id="wrap"></div><div id="ix"></div>
+<script>
+const CFG={"key":null,"api":"https://tzacvgixagqfydugnfdk.supabase.co/functions/v1/pn"};const K=CFG.key||new URLSearchParams(location.search).get('k')||'';const base=CFG.api||location.pathname.replace(/\/screen\/?$/,'');let R=null,i=0;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pct=(v,t)=>t?Math.round(v/t*100):0;
+function bars(obj,total,cls){const max=Math.max(1,...Object.values(obj));return Object.entries(obj).map(([k,v])=>'<div class="row '+((cls&&cls[k])||'')+'"><span>'+esc(k)+'</span><div class="b"><i style="width:'+(v/max*100)+'%"></i></div><span class="n">'+pct(v,total)+'%<small>'+v+'</small></span></div>').join('')}
+function pp(sh,label){if(!sh||!sh.n)return '<p class="vs">Waiting for both answers.</p>';return '<div class="pp"><div><b>'+sh.pre+'</b><div class="col" style="height:'+(sh.pre/10*300)+'px"></div>Before</div><div><b>'+sh.post+'</b><div class="col post" style="height:'+(sh.post/10*300)+'px"></div>After</div></div><p class="foot">'+label+' · '+sh.n+' people answered both · '+sh.up+' went up, '+sh.same+' stayed, '+sh.down+' went down</p>'}
+const S=[
+ r=>{const a=r.choice.a1,n=r.answered.a1,y=(a['Yes, one thing']||0)+(a['Yes, several']||0);return '<p class="kicker">This room</p><h1>Something with AI you keep putting off</h1><div class="big">'+pct(y,n)+'%</div><p class="vs">of '+n+' people here · <b>the paper said 62%</b></p>'},
+ r=>'<p class="kicker">This room</p><h1>What you did instead</h1>'+bars(r.sb,r.answered.sb,{'Helped someone else with theirs':'hot'})+'<p class="foot">Sometimes procrastination looks remarkably like work.</p>',
+ r=>'<p class="kicker">This room</p><h1>What it felt like underneath</h1>'+bars(r.ffs,r.answered.b4,{Fear:'hot',Fog:'',Stasis:'lime'})+'<p class="foot">What if this exposes me · I don\'t know what to do with it · Nothing is moving</p>',
+ r=>'<p class="kicker">Before and after</p><h1>Confidence you\'ll start this week</h1>'+pp(r.shift.confidence,'0 to 10'),
+ r=>'<p class="kicker">Before and after</p><h1>Curiosity about AI</h1>'+pp(r.shift.curiosity,'0 to 10'),
+ r=>'<p class="kicker">This room</p><h1>Did you feel a shift?</h1>'+bars(r.choice.b16,r.answered.b16,{Yes:'lime'})+'<p class="foot">Twenty minutes. Four questions. A taste, not a study.</p>',
+ r=>'<p class="kicker">Three first moves, from the room</p><h1>Someone here wrote this</h1><ul>'+(r.texts.b11||[]).slice(0,3).map(t=>'<li>'+esc(t.text)+'</li>').join('')+'</ul><p class="foot">No names. Nobody knows who.</p>',
+];
+function draw(){if(!R)return;document.getElementById('wrap').innerHTML=S[i](R);document.getElementById('ix').textContent=(i+1)+'/'+S.length+' · '+R.n+' phones'}
+async function tick(){try{const r=await fetch(base+'/api/results',{headers:{'x-pn-key':K},cache:'no-store'});R=await r.json();draw()}catch(e){}setTimeout(tick,4000)}
+function go(d){i=Math.max(0,Math.min(S.length-1,i+d));draw()}
+addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(1);if(e.key==='ArrowLeft'||e.key==='PageUp')go(-1)});
+addEventListener('click',()=>go(1));tick();
+</script></body></html>
