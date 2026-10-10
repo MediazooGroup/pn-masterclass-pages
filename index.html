@@ -3,86 +3,92 @@
 <title>Procrastination Nation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#F6F2F7;--ink:#261E20;--lime:#C4FF02;--pink:#FF4DFF;--violet:#5736F5;--mute:rgba(38,30,32,.62);--card:#fff;--line:rgba(38,30,32,.18)}
-*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.45 Arial,Helvetica,sans-serif}
-header{background:var(--violet);color:var(--paper);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-header b{font:24px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.08em;color:var(--lime)}header span{font-size:14px;color:rgba(246,242,247,.8)}
-main{padding:20px 16px 40px;max-width:640px;margin:0 auto}
-@media (min-width:700px){body{font-size:19px}main{padding:32px 24px 60px}}
-h1{font:44px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.02em;margin:8px 0 8px;color:var(--ink)}
-@media (min-width:700px){h1{font-size:56px}}
-.sub{color:var(--mute);margin:0 0 20px;font-size:17px}
-.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin:0 0 14px}
-.q label.t{display:block;font-weight:700;margin-bottom:10px;color:var(--ink)}
-.help{font-size:17px;color:var(--mute);margin:-4px 0 10px}
-input[type=text],input[type=email],textarea{width:100%;font:inherit;padding:12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-input:focus,textarea:focus{outline:3px solid var(--violet);outline-offset:0;border-color:var(--violet)}
-textarea{min-height:76px;resize:vertical}
-.opts button{display:block;width:100%;text-align:left;font:inherit;padding:12px 14px;margin:8px 0;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer}
+:root{--paper:#F6F2F7;--ink:#261E20;--lime:#C4FF02;--pink:#FF4DFF;--violet:#5736F5;--mute:rgba(38,30,32,.6);--line:rgba(38,30,32,.18)}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;background:var(--paper);color:var(--ink);font:19px/1.4 Arial,Helvetica,sans-serif;min-height:100vh}
+main{max-width:680px;margin:0 auto;padding:28px 18px 60px}
+@media (min-width:700px){body{font-size:21px}main{padding:56px 24px 80px}}
+.thing{background:var(--violet);color:var(--paper);border-radius:14px;padding:14px 18px;margin:0 0 26px;font-size:18px;line-height:1.35}
+.thing small{display:block;font:15px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.1em;color:var(--lime);margin-bottom:6px}
+.lens{font:22px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.1em;color:var(--violet);margin:0 0 10px}
+.ask{color:var(--mute);margin:0 0 22px;font-size:17px}
+h1{font:46px/1.02 'Bebas Neue',Arial,sans-serif;letter-spacing:.01em;margin:0 0 10px;color:var(--ink)}
+@media (min-width:700px){h1{font-size:62px}}
+.help{color:var(--mute);margin:0 0 18px;font-size:17px}
+.opts button{display:block;width:100%;text-align:left;font:inherit;padding:14px 16px;margin:10px 0;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
 .opts button.on{border-color:var(--violet);background:var(--violet);color:var(--paper);font-weight:700}
-.scale{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
-.scale button{font:inherit;padding:11px 0;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);cursor:pointer}
+.scale{display:grid;grid-template-columns:repeat(11,1fr);gap:5px;margin-top:8px}
+.scale button{font:inherit;padding:13px 0;border:2px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);cursor:pointer}
 .scale button.on{background:var(--violet);border-color:var(--violet);color:var(--paper);font-weight:700}
-.ends{display:flex;justify-content:space-between;font-size:17px;color:var(--mute);margin-top:6px}
-.save{position:sticky;bottom:12px;display:block;width:100%;font:26px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.06em;padding:18px;border:0;border-radius:14px;background:var(--lime);color:var(--ink);margin-top:10px;cursor:pointer;box-shadow:0 6px 24px rgba(38,30,32,.18)}
-.save[disabled]{background:#ccc}
-.status{text-align:center;font-size:17px;color:var(--mute);margin:12px 0 30px;min-height:22px}
-.wait{text-align:center;padding:60px 10px}.wait .dot{width:16px;height:16px;border-radius:50%;background:var(--pink);margin:20px auto;animation:p 1.4s infinite}
+.ends{display:flex;justify-content:space-between;font-size:16px;color:var(--mute);margin-top:8px}
+textarea,input[type=email]{width:100%;font:inherit;padding:14px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);margin-top:6px}
+textarea{min-height:110px;resize:vertical}textarea:focus,input:focus{outline:none;border-color:var(--violet)}
+.next{display:block;width:100%;font:28px/1 'Bebas Neue',Arial,sans-serif;letter-spacing:.08em;padding:18px;border:0;border-radius:14px;background:var(--lime);color:var(--ink);margin-top:18px;cursor:pointer}
+.next[disabled]{opacity:.45;cursor:default}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:16px;color:var(--mute)}
+.row a{color:var(--mute);text-decoration:underline;cursor:pointer}
+.tick{color:#1d7a3a}.err{color:#b4006a}
+.done{text-align:center;padding:50px 10px}.done h1{font-size:60px}.done .dot{width:16px;height:16px;border-radius:50%;background:var(--pink);margin:18px auto;animation:p 1.4s infinite}
 @keyframes p{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
-pre{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;font:17px/1.45 Arial,Helvetica,sans-serif;color:var(--ink)}
-.err{color:#b4006a;font-size:17px}
-.space{background:var(--violet);color:var(--paper);border-radius:14px;padding:20px;margin-bottom:14px;text-align:center}
-.space b{font:72px/1 'Bebas Neue',Arial,sans-serif;display:block;color:var(--lime)}
-.team{background:var(--pink);color:var(--ink);border-radius:14px;padding:16px 18px;margin:0 0 14px;font-weight:700}
-a{color:var(--violet)}
+.dots{display:flex;gap:6px;margin:0 0 22px}.dots i{width:22px;height:5px;border-radius:3px;background:var(--line)}.dots i.on{background:var(--violet)}
+pre{white-space:pre-wrap;background:#fff;border:2px solid var(--line);border-radius:14px;padding:16px;font:17px/1.45 Arial,Helvetica,sans-serif;color:var(--ink)}
+.team{background:var(--pink);color:var(--ink);border-radius:14px;padding:16px 18px;margin:0 0 16px;font-weight:700}
+#code{position:fixed;right:10px;bottom:8px;font-size:12px;color:var(--mute)}
 </style></head><body>
-<header><b>PROCRASTINATION NATION</b><span id="code"></span></header>
-<main id="m"></main>
+<main id="m"></main><div id="code"></div>
 <script>
-const CFG={"STAGES":[{"n":0,"name":"Waiting","title":"While you wait","sub":"Keep this page open beside the session. It moves on when Sam says so."},{"n":1,"name":"Start","title":"Before we start","sub":"Rough answers are the right answers."},{"n":2,"name":"The thing","title":"The thing","sub":"One rough line. You can change it later."},{"n":3,"name":"Right now","title":"Right now","sub":"Two numbers. Honestly."},{"n":4,"name":"Notice","title":"01  NOTICE","sub":"What's the uncertainty in front of you that's making you want to leave the room?"},{"n":5,"name":"Space","title":"02  SPACE","sub":"Have you given this any space, or only more attention?"},{"n":6,"name":"Choose","title":"03  CHOOSE","sub":"How much of what you're waiting for is real information, and how much is so you don't have to feel uncertain?"},{"n":7,"name":"Practise","title":"04  PRACTISE","sub":"What would you do if you weren't thinking about how it looked?"},{"n":8,"name":"After","title":"Same two questions","sub":"Honestly. Nobody is marking this."},{"n":9,"name":"Your prompt","title":"Your tool, to keep","sub":"The full version, with your answers in it, is in your inbox tonight."}],"QUESTIONS":{"0":[{"key":"ice","type":"choice","label":"What else are you doing right now?","options":["Solely focused on this","One eye on my emails","At least one social feed open","Totally distracted by something personal","Reliving an argument with someone"]},{"key":"ice5","type":"text","label":"Your favourite form of procrastination, in five words","help":"Optional. It may appear on screen, with no name."}],"1":[{"key":"email","type":"email","label":"Your email","help":"So tonight's reflection comes back to you. Only you see your answers. The room only ever sees totals."},{"key":"a1","type":"choice","label":"Is there something you'd like to do with AI and haven't got round to?","options":["Yes, one thing","Yes, several","No, I'm on it","No, I'm avoiding the whole thing"]},{"key":"a2","type":"choice","label":"The honest reason","options":["No time","It makes me nervous","Don't know where to start","Data rules at work","I keep meaning to","Other"]}],"2":[{"key":"a5","type":"text","label":"The thing, in one rough line. You can change it later.","help":"Stuck? \"An assistant that reads my inbox and tells me what matters.\" \"Try the AI thing my team keeps mentioning.\" \"Open Copilot for something that isn't a meeting summary.\""}],"3":[{"key":"a3","type":"scale","label":"Right now, how much of a threat does AI feel to you personally?","lo":"Not at all","hi":"A lot"},{"key":"a4","type":"scale","label":"Right now, how curious and playful do you feel about AI?","lo":"Not at all","hi":"Very"},{"key":"qd","type":"choice","label":"Which one are you, today?","options":["The Withdrawn Sceptic","The Overextended Enthusiast","The Compliant Middle","The Curious Experimenter"]}],"4":[{"key":"b1","type":"scale","label":"How confident are you that you'll actually make a start on it in the next 7 days?","lo":"Not at all","hi":"Certain"},{"key":"b2","type":"text","label":"The thing, in one sentence, as if telling a friend what you'd like to be able to do."},{"key":"sb","type":"multi","label":"What have you done instead? Tick all that apply.","options":["Researched it","Called a meeting","Rewrote the plan","Helped someone else with theirs","Tidied the inbox","None of these"]},{"key":"b3","type":"text","label":"Finish this: \"The bit I'm not sure about is...\""},{"key":"b4","type":"choice","label":"Which is closest?","options":["What if this exposes me","I don't know what to do with it","Nothing is moving"]}],"5":[{"key":"b5","type":"text","label":"What did you notice when you stopped staring at it?"},{"key":"b6","type":"text","label":"Where in the next week does it already have a bit of space?","help":"A commute, a walk, a Friday afternoon."}],"6":[{"key":"b7","type":"choice","label":"What are you actually waiting for?","options":["Mostly information","Mostly comfort","Honestly, both"]},{"key":"b8","type":"choice","label":"Pick one move","options":["A pause with a date","One piece of information I'll go and get","The smallest useful thing before tomorrow"]},{"key":"b9","type":"text","label":"Which, specifically?"}],"7":[{"key":"b10","type":"text","label":"What would you do if nobody could see the first attempt?"},{"key":"b11","type":"text","label":"My first move is..."},{"key":"b12","type":"choice","label":"...on","options":["Tomorrow","Thursday","Friday","Next Monday","Next Tuesday"]},{"key":"b13","type":"text","label":"If ___ gets in the way, I will ___","help":"Write both halves."}],"8":[{"key":"b14","type":"scale","label":"How confident are you that you'll actually make a start on it in the next 7 days?","lo":"Not at all","hi":"Certain"},{"key":"b15","type":"scale","label":"Right now, how curious and playful do you feel about AI?","lo":"Not at all","hi":"Very"},{"key":"b16","type":"choice","label":"Did you feel a shift?","options":["Yes","A bit","No"]},{"key":"b17","type":"choice","label":"Can we email you on the next four Tuesdays with your reflection and a top-up prompt?","options":["Yes","No"]},{"key":"b18","type":"choice","label":"I'd like to talk about running this with my team","options":["Yes","No"]}],"9":[]},"PROMPT_GENERIC":"I'm working on something I've been putting off with AI. Here it is: [paste the thing you wrote today].\nBefore the session my confidence I'd start it this week was [before]/10 and my curiosity about AI was [curiosity]/10. After, confidence was [after]/10.\n\nBe a playful, practical build partner, not a coach and not a cheerleader. No tool connections, nothing that sends, edits or deletes anything. Read-only, made-up data if I'm unsure.\nAsk me the four questions one at a time, waiting for each answer: what's the uncertainty in front of me that makes me want to leave the room; have I given this any space or only more attention; how much of what I'm waiting for is real information and how much is so I don't have to feel uncertain; what would I do if I weren't thinking about how it looked.\nThen ask me to restate my first move and its day. Suggest one 25-minute slot this week called \"Procrastination\" to noodle on this with you, and tell me to put it in my diary where colleagues can see it. Each time I come back, ask what happened, keep what helped, and nudge me to the next smallest thing. Challenge me once, in three sentences, if I'm researching instead of doing. Keep it short. Start with question one only.","api":"https://tzacvgixagqfydugnfdk.supabase.co/functions/v1/pn"};
+const CFG={"STAGES":[{"n":0,"name":"Arrive","done":"Thanks. We'll begin shortly."},{"n":1,"name":"Framing","done":"That's your thing. Look up."},{"n":2,"name":"Notice","lens":"01  NOTICE","ask":"What's the uncertainty in front of you that's making you want to leave the room?","done":"Noticed. Look up."},{"n":3,"name":"Space","lens":"02  SPACE","ask":"Have you given this any space, or only more attention?","done":"Look up."},{"n":4,"name":"Choose","lens":"03  CHOOSE","ask":"How much of what you're waiting for is real information, and how much is so you don't have to feel uncertain?","done":"Chosen. Look up."},{"n":5,"name":"Practise","lens":"04  PRACTISE","ask":"What would you do if you weren't thinking about how it looked?","done":"That's your first move. Look up."},{"n":6,"name":"After","done":"Thank you. Look up."},{"n":7,"name":"Prompt","done":""}],"QUESTIONS":{"0":[{"key":"q1","type":"choice","label":"Your most common kind of procrastination?","options":["Researching it instead of doing it","Calling another meeting","Rewriting the plan","Helping someone else with theirs","Tidying the inbox","Honestly, nothing"]},{"key":"q2","type":"choice","label":"How many other things are you doing at the same time as this?","options":["None","One","Two","Three or more"]},{"key":"q3","type":"choice","label":"The biggest uncertainty facing you at work right now?","options":["AI","Restructuring or job security","Budget","Customers or the market","Leadership or strategy","Something else"]},{"key":"q4","type":"choice","label":"When it comes to using AI, I feel...","options":["Mostly excited","A bit excited","A bit uncertain","Very uncertain"]},{"key":"q5","type":"choice","label":"I know there are AI tools that could help me achieve more. If I'm honest, I'm procrastinating about them rather than exploring them.","options":["Yes, that's me","Partly","No, I'm on it"]}],"1":[{"key":"f1","type":"text","label":"What's the AI, or the kind of thing it does?","help":"You may not know its name. Rough is fine."},{"key":"f2","type":"text","label":"What would you like to explore with it?"},{"key":"f3","type":"text","label":"What would that exploration look like if it was fun?"},{"key":"cpre","type":"scale","label":"How confident are you that you'll make a start on it in the next 7 days?","lo":"Not at all","hi":"Certain"},{"key":"kpre","type":"scale","label":"How curious and playful do you feel about it right now?","lo":"Not at all","hi":"Very"}],"2":[{"key":"n1","type":"text","label":"Finish this: \"The bit I'm not sure about is...\""},{"key":"n2","type":"choice","label":"Which is closest?","options":["What if this exposes me","I don't know what to do with it","Nothing is moving"]},{"key":"sb","type":"multi","label":"What have you done instead, so far?","options":["Researched it","Called a meeting","Rewrote the plan","Helped someone else with theirs","Tidied the inbox","None of these"]}],"3":[{"key":"s1","type":"text","label":"What did you notice when you stopped staring at it?"},{"key":"s2","type":"text","label":"Where in the next week does it already have a bit of space?","help":"A commute, a walk, a Friday afternoon."}],"4":[{"key":"c1","type":"choice","label":"What are you actually waiting for?","options":["Mostly information","Mostly comfort","Honestly, both"]},{"key":"c2","type":"choice","label":"Pick one move","options":["A pause with a date","One piece of information I'll go and get","The smallest useful thing before tomorrow"]},{"key":"c3","type":"text","label":"Which, specifically?"}],"5":[{"key":"p1","type":"text","label":"What would you do if nobody could see the first attempt?"},{"key":"p2","type":"text","label":"My first move is..."},{"key":"p3","type":"choice","label":"...on","options":["Tomorrow","Thursday","Friday","Next Monday","Next Tuesday"]},{"key":"p4","type":"text","label":"If ___ gets in the way, I will ___","help":"Write both halves."}],"6":[{"key":"cpost","type":"scale","label":"How confident are you that you'll make a start on it in the next 7 days?","lo":"Not at all","hi":"Certain"},{"key":"kpost","type":"scale","label":"How curious and playful do you feel about it right now?","lo":"Not at all","hi":"Very"},{"key":"shift","type":"choice","label":"Did you feel a shift?","options":["Yes","A bit","No"]},{"key":"email","type":"email","label":"Your email, so tonight's reflection and your prompt come back to you.","help":"Only you see your answers. The room only ever sees totals."},{"key":"consent","type":"choice","label":"Can we email you on Thursday and the next two Tuesdays with a top-up prompt?","options":["Yes","No"]},{"key":"team","type":"choice","label":"I'd like to talk about running this with my team.","options":["Yes","No"]}],"7":[]},"PROMPT_GENERIC":"I'm working on something I've been putting off with AI. Here it is: [paste the thing you wrote today].\nBefore the session my confidence I'd start it this week was [before]/10 and my curiosity about it was [curiosity]/10. After, confidence was [after]/10.\n\nBe a playful, practical build partner, not a coach and not a cheerleader. No tool connections, nothing that sends, edits or deletes anything. Read-only, made-up data if I'm unsure.\nAsk me the four questions one at a time, waiting for each answer: what's the uncertainty in front of me that makes me want to leave the room; have I given this any space or only more attention; how much of what I'm waiting for is real information and how much is so I don't have to feel uncertain; what would I do if I weren't thinking about how it looked.\nThen ask me to restate my first move and its day. Suggest one 25-minute slot this week called \"Procrastination\" to noodle on this with you, and tell me to put it in my diary where colleagues can see it. Each time I come back, ask what happened, keep what helped, and nudge me to the next smallest thing. Challenge me once, in three sentences, if I'm researching instead of doing. Keep it short. Start with question one only.","api":"https://tzacvgixagqfydugnfdk.supabase.co/functions/v1/pn"};
 const $=s=>document.querySelector(s);
 const uuid=()=>crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c=='x'?r:(r&3|8)).toString(16)});
 const L=k=>{try{return localStorage.getItem(k)}catch(e){return null}};const S=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 let pid=L('pn_pid');if(!pid){pid=uuid();S('pn_pid',pid)}
-let ans=JSON.parse(L('pn_ans')||'{}');let saved=JSON.parse(L('pn_saved')||'{}');let stage=-1,shown=-1,busy=false;
+let ans=JSON.parse(L('pn_ans')||'{}'),saved=JSON.parse(L('pn_saved')||'{}'),pos=JSON.parse(L('pn_pos')||'{}');
+let stage=-1,busy=false,queue={},lastErr='';
 if(L('pn_code'))$('#code').textContent='#'+L('pn_code');
-const base=CFG.api||location.pathname.replace(/\/+$/,'');
-async function api(p,o){const r=await fetch(base+p,Object.assign({headers:{'content-type':'application/json'},cache:'no-store'},o));if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||r.status);return r.json()}
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const base=CFG.api||location.pathname.replace(/\/+$/,'');const TEST=new URLSearchParams(location.search).get('test')==='1';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function qs(){return CFG.QUESTIONS[stage]||[]}
+function thing(){const a=(ans.f1||'').trim(),b=(ans.f2||'').trim();return a||b?(a?'<b>'+esc(a)+'</b>':'')+(a&&b?'<br>':'')+esc(b):''}
 function render(){
-  const st=CFG.STAGES[stage]||CFG.STAGES[0];const qs=CFG.QUESTIONS[stage]||[];const m=$('#m');
-  if(stage<0){m.innerHTML='<div class="wait"><h1>Nearly there</h1><div class="dot"></div><p class="sub">Keep this page open.</p></div>';return}
-  let h='<h1>'+esc(st.title)+'</h1><p class="sub">'+esc(st.sub)+'</p>';
-  if(stage===5)h+='<div class="space">Put the phone down first.<b>60</b>seconds of space. Then answer.</div>';
-  if(stage===9){if(ans.b18==='Yes')h+='<div class="team">You said you\'d like to talk about your team. We\'ll be in touch.</div>';h+='<p>Paste this into whatever AI you already use. Your organisation\'s approved tool for anything about work, no names.</p><pre id="pr">'+esc(CFG.PROMPT_GENERIC)+'</pre><button class="save" onclick="navigator.clipboard.writeText(document.getElementById(\'pr\').textContent).then(()=>this.textContent=\'Copied\')">Copy the prompt</button><p class="status">Thank you. See you on Tuesday, in your inbox.</p>';m.innerHTML=h;return}
-  for(const q of qs){
-    h+='<div class="q" data-k="'+q.key+'"><label class="t">'+esc(q.label)+'</label>'+(q.help?'<div class="help">'+esc(q.help)+'</div>':'');
-    const v=ans[q.key]||'';
-    if(q.type==='email')h+='<input type="email" inputmode="email" autocomplete="email" placeholder="you@work.com" value="'+esc(v)+'" oninput="setA(\''+q.key+'\',this.value,1)">';
-    else if(q.type==='text')h+='<textarea maxlength="600" oninput="setA(\''+q.key+'\',this.value,1)">'+esc(v)+'</textarea>';
-    else if(q.type==='choice')h+='<div class="opts">'+q.options.map(o=>'<button type="button" class="'+(v===o?'on':'')+'" onclick="setA(\''+q.key+'\',this.textContent)">'+esc(o)+'</button>').join('')+'</div>';
-    else if(q.type==='multi'){const set=new Set(v?v.split('|'):[]);h+='<div class="opts">'+q.options.map(o=>'<button type="button" class="'+(set.has(o)?'on':'')+'" onclick="togA(\''+q.key+'\',this.textContent)">'+esc(o)+'</button>').join('')+'</div>'}
-    else if(q.type==='scale')h+='<div class="scale">'+Array.from({length:11},(_,i)=>'<button type="button" class="'+(v===String(i)?'on':'')+'" onclick="setA(\''+q.key+'\',\''+i+'\')">'+i+'</button>').join('')+'</div><div class="ends"><span>'+esc(q.lo)+'</span><span>'+esc(q.hi)+'</span></div>';
-    h+='</div>';
-  }
-  h+='<button class="save" id="sv" onclick="save(true)">Save</button><div class="status" id="stt"></div>';
-  m.innerHTML=h;updateStatus();
+  const m=$('#m');const st=CFG.STAGES[stage];
+  if(stage<0){m.innerHTML='<div class="done"><h1>Nearly there</h1><div class="dot"></div><p class="help">Keep this page open.</p></div>';return}
+  if(stage===7){let h='<h1>Your tool, to keep</h1>';if(ans.team==='Yes')h+='<div class="team">You said you\'d like to talk about your team. We\'ll be in touch.</div>';
+    h+='<p class="help">The full version, with your answers already in it, is in your inbox tonight. This is the one to paste into whatever AI you already use. Your organisation\'s approved tool for anything about work, no names.</p><pre id="pr">'+esc(CFG.PROMPT_GENERIC)+'</pre><button class="next" onclick="navigator.clipboard.writeText(document.getElementById(\'pr\').textContent).then(()=>this.textContent=\'Copied\')">Copy the prompt</button>';m.innerHTML=h;return}
+  const list=qs();let i=Math.min(pos[stage]||0,list.length);
+  let h='';
+  if(stage>=2&&stage<=5){const t=thing();if(t)h+='<div class="thing"><small>YOUR THING</small>'+t+'</div>';h+='<div class="lens">'+esc(st.lens)+'</div><p class="ask">'+esc(st.ask)+'</p>'}
+  if(i>=list.length){h+='<div class="done"><h1>'+esc(st.done)+'</h1><div class="dot"></div>'+(list.length?'<p class="help"><a onclick="back()" style="cursor:pointer;text-decoration:underline">Change an answer</a></p>':'')+'</div>';m.innerHTML=h;return}
+  const q=list[i];const v=ans[q.key]||'';
+  h+='<div class="dots">'+list.map((_,k)=>'<i class="'+(k<=i?'on':'')+'"></i>').join('')+'</div>';
+  h+='<h1>'+esc(q.label)+'</h1>'+(q.help?'<p class="help">'+esc(q.help)+'</p>':'');
+  if(q.type==='choice')h+='<div class="opts">'+q.options.map(o=>'<button type="button" class="'+(v===o?'on':'')+'" onclick="pick(\''+q.key+'\',this.textContent)">'+esc(o)+'</button>').join('')+'</div>';
+  else if(q.type==='multi'){const set=new Set(v?v.split('|'):[]);h+='<div class="opts">'+q.options.map(o=>'<button type="button" class="'+(set.has(o)?'on':'')+'" onclick="tog(\''+q.key+'\',this.textContent)">'+esc(o)+'</button>').join('')+'</div><button class="next" onclick="next()">Next</button>'}
+  else if(q.type==='scale')h+='<div class="scale">'+Array.from({length:11},(_,k)=>'<button type="button" class="'+(v===String(k)?'on':'')+'" onclick="pick(\''+q.key+'\',\''+k+'\')">'+k+'</button>').join('')+'</div><div class="ends"><span>'+esc(q.lo)+'</span><span>'+esc(q.hi)+'</span></div>';
+  else if(q.type==='text')h+='<textarea id="in" maxlength="600" oninput="typed(\''+q.key+'\',this.value)" placeholder="Type here">'+esc(v)+'</textarea><button class="next" id="nx" onclick="next()">Next</button>';
+  else if(q.type==='email')h+='<input id="in" type="email" inputmode="email" autocomplete="email" placeholder="you@work.com" value="'+esc(v)+'" oninput="typed(\''+q.key+'\',this.value)"><button class="next" id="nx" onclick="next()">Next</button>';
+  h+='<div class="row"><span id="stt"></span>'+(i>0?'<a onclick="back()">Back</a>':'<span></span>')+'</div>';
+  m.innerHTML=h;status();const el=$('#in');if(el&&q.type==='text')el.focus();
 }
-let t;function setA(k,v,typing){ans[k]=v;S('pn_ans',JSON.stringify(ans));if(!typing)render();clearTimeout(t);t=setTimeout(()=>save(false),typing?1500:300)}
-function togA(k,o){const set=new Set(ans[k]?ans[k].split('|'):[]);if(o==='None of these'){set.clear();set.add(o)}else{set.delete('None of these');set.has(o)?set.delete(o):set.add(o)}setA(k,[...set].join('|'))}
-function updateStatus(){const qs=CFG.QUESTIONS[stage]||[];const done=qs.filter(q=>ans[q.key]&&saved[q.key]===ans[q.key]).length;const el=$('#stt');if(!el)return;el.textContent=done===qs.length&&qs.length?'All saved. Look up.':(done?done+' of '+qs.length+' saved':'')}
-async function save(manual){
-  const qs=CFG.QUESTIONS[stage]||[];const payload={};
-  for(const q of qs){const v=(ans[q.key]||'').trim();if(v&&saved[q.key]!==v)payload[q.key]=v}
-  if(stage===1&&manual&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ans.email||'')){const el=$('#stt');if(el){el.innerHTML='<span class="err">We need an email so your reflection can come back to you.</span>'}return}
-  if(!Object.keys(payload).length){updateStatus();return}
-  if(busy)return;busy=true;
-  try{const r=await api('/api/answer',{method:'POST',body:JSON.stringify({pid,answers:payload})});
-    for(const k of r.saved)saved[k]=payload[k];if(payload.email)saved.email=payload.email;S('pn_saved',JSON.stringify(saved));
-    if(r.code){S('pn_code',r.code);$('#code').textContent='#'+r.code}updateStatus()}
-  catch(e){const el=$('#stt');if(el)el.innerHTML='<span class="err">'+(e.message==='email'?'That email doesn\'t look right.':'Not saved yet. Trying again.')+'</span>';setTimeout(()=>save(false),4000)}
+function status(){const el=$('#stt');if(!el)return;const q=qs()[pos[stage]||0];if(!q)return;const v=(ans[q.key]||'').trim();
+  if(lastErr)el.innerHTML='<span class="err">Not saved: '+esc(lastErr)+'. Retrying.</span>';else if(v&&saved[q.key]===v)el.innerHTML='<span class="tick">Saved</span>';else if(v)el.textContent='Saving';else el.textContent=''}
+function setA(k,v){ans[k]=v;S('pn_ans',JSON.stringify(ans))}
+let t;function typed(k,v){setA(k,v);clearTimeout(t);t=setTimeout(()=>flush(),900);status()}
+function pick(k,v){setA(k,v);render();flush();setTimeout(next,320)}
+function tog(k,o){const set=new Set(ans[k]?ans[k].split('|'):[]);if(o==='None of these'){set.clear();set.add(o)}else{set.delete('None of these');set.has(o)?set.delete(o):set.add(o)}setA(k,[...set].join('|'));render();flush()}
+function next(){const list=qs();const i=pos[stage]||0;const q=list[i];
+  if(q&&q.type==='email'){const v=(ans.email||'').trim();if(!EMAIL.test(v)){lastErr='';const el=$('#stt');if(el)el.innerHTML='<span class="err">That email doesn\'t look right.</span>';return}}
+  flush();pos[stage]=Math.min(i+1,list.length);S('pn_pos',JSON.stringify(pos));render();window.scrollTo(0,0)}
+function back(){const i=pos[stage]||0;pos[stage]=Math.max(0,Math.min(i,qs().length)-1);S('pn_pos',JSON.stringify(pos));render()}
+async function flush(){
+  const payload={};for(const s in CFG.QUESTIONS)for(const q of CFG.QUESTIONS[s]){const v=(ans[q.key]||'').trim();if(!v||saved[q.key]===v)continue;if(q.type==='email'&&!EMAIL.test(v))continue;payload[q.key]=v}
+  if(!Object.keys(payload).length||busy)return;busy=true;
+  try{const r=await fetch(base+'/api/answer',{method:'POST',headers:Object.assign({'content-type':'application/json'},TEST?{'x-pn-test':'1'}:{}),cache:'no-store',body:JSON.stringify({pid,answers:payload})});
+    if(!r.ok){let e='';try{e=(await r.json()).error||''}catch(x){}throw new Error(e||('HTTP '+r.status))}
+    const j=await r.json();for(const k of j.saved)saved[k]=payload[k];if(payload.email&&j.ok)saved.email=payload.email;S('pn_saved',JSON.stringify(saved));
+    if(j.code){S('pn_code',j.code);$('#code').textContent='#'+j.code}lastErr='';status()}
+  catch(e){lastErr=(e&&e.message)||'network';status();setTimeout(flush,4000)}
   finally{busy=false}
 }
-async function poll(){try{const r=await api('/api/stage');if(r.stage!==stage){if(shown>=1&&Object.keys(ans).length)save(false);stage=r.stage;shown=stage;render();window.scrollTo(0,0)}}catch(e){}setTimeout(poll,3000)}
-poll();
+async function poll(){try{const r=await fetch(base+'/api/stage',{cache:'no-store'});const j=await r.json();if(j.stage!==stage){stage=j.stage;render();window.scrollTo(0,0)}}catch(e){}setTimeout(poll,3000)}
+poll();setInterval(flush,6000);
 </script></body></html>
