@@ -94,6 +94,9 @@ async function flush(){
   catch(e){lastErr=(e&&e.name==='AbortError')?'slow connection':((e&&e.message)||'network');status();dirty=true}
   finally{clearTimeout(timer);busy=false;if(dirty)setTimeout(flush,lastErr?3000:150)}
 }
-async function poll(){try{const r=await fetch(base+'/api/stage',{cache:'no-store'});const j=await r.json();if(j.stage!==stage){stage=j.stage;render();window.scrollTo(0,0)}}catch(e){}setTimeout(poll,3000)}
+const SJ=/\/functions\/v1\//.test(base)?base.replace(/\/functions\/v1\/.*$/,'')+'/storage/v1/object/public/pn-public/stage.json':'';
+async function poll(){let j=null;try{if(SJ){const r=await fetch(SJ+'?v='+Math.floor(Date.now()/3000),{cache:'no-store'});if(r.ok)j=await r.json()}}catch(e){}
+  if(!j||typeof j.stage!=='number'){try{const r=await fetch(base+'/api/stage',{cache:'no-store'});j=await r.json()}catch(e){}}
+  if(j&&typeof j.stage==='number'&&j.stage!==stage){stage=j.stage;render();window.scrollTo(0,0)}setTimeout(poll,3000)}
 poll();setInterval(flush,4000);
 </script></body></html>
