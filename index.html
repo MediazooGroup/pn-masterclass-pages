@@ -114,8 +114,17 @@ async function flush(){
   finally{clearTimeout(timer);busy=false;if(dirty)setTimeout(flush,lastErr?3000:150)}
 }
 const SJ=/\/functions\/v1\//.test(base)?base.replace(/\/functions\/v1\/.*$/,'')+'/storage/v1/object/public/pn-public/stage.json':'';
-async function poll(){let j=null;try{if(SJ){const r=await fetch(SJ+'?v='+Math.floor(Date.now()/3000),{cache:'no-store'});if(r.ok)j=await r.json()}}catch(e){}
-  if(!j||typeof j.stage!=='number'){try{const r=await fetch(base+'/api/stage',{cache:'no-store'});j=await r.json()}catch(e){}}
-  if(j&&typeof j.stage==='number'&&j.stage!==stage){stage=j.stage;render();window.scrollTo(0,0)}setTimeout(poll,3000)}
+// Stage sync: stage.json (CDN, cheap) every 3 s, the function every 4th poll or when the file fails.
+// Each source carries a timestamp and the newest wins, so a stale CDN copy can never pull a phone back.
+let pollT=0,pollBusy=false,pollN=0,stageT=0;
+const tget=u=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),4000);return fetch(u,{cache:'no-store',signal:c.signal}).then(r=>r.ok?r.json():null).catch(()=>null).finally(()=>clearTimeout(t))};
+const tsOf=x=>{const n=Date.parse((x&&x.t)||'');return isNaN(n)?0:n};
+function take(x){if(!x||typeof x.stage!=='number')return;const t=tsOf(x);if(x.stage===stage){if(t>stageT)stageT=t;return}if(t&&t<stageT)return;stage=x.stage;stageT=t||Date.now();render();window.scrollTo(0,0)}
+async function poll(){if(pollBusy)return;pollBusy=true;clearTimeout(pollT);pollN++;
+  try{const a=SJ?await tget(SJ+'?v='+Date.now()):null;take(a);
+    if(!a||typeof a.stage!=='number'||pollN%4===0)take(await tget(base+'/api/stage'))}
+  catch(e){}finally{pollBusy=false;pollT=setTimeout(poll,3000)}}
+const wake=()=>{if(document.visibilityState!=='hidden'){pollN=3;poll()}};
+document.addEventListener('visibilitychange',wake);window.addEventListener('focus',wake);window.addEventListener('pageshow',wake);
 poll();setInterval(flush,4000);
 </script></body></html>
