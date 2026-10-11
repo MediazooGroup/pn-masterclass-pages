@@ -115,14 +115,14 @@ async function flush(){
 }
 const SJ=/\/functions\/v1\//.test(base)?base.replace(/\/functions\/v1\/.*$/,'')+'/storage/v1/object/public/pn-public/stage.json':'';
 // Stage sync: stage.json (CDN, cheap) every 3 s, the function every 4th poll or when the file fails.
-// Each source carries a timestamp and the newest wins, so a stale CDN copy can never pull a phone back.
+// The database answer always wins; the CDN file only moves a phone if it is at least as new, so a stale copy can never pull a phone back.
 let pollT=0,pollBusy=false,pollN=0,stageT=0;
 const tget=u=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),4000);return fetch(u,{cache:'no-store',signal:c.signal}).then(r=>r.ok?r.json():null).catch(()=>null).finally(()=>clearTimeout(t))};
 const tsOf=x=>{const n=Date.parse((x&&x.t)||'');return isNaN(n)?0:n};
-function take(x){if(!x||typeof x.stage!=='number')return;const t=tsOf(x);if(x.stage===stage){if(t>stageT)stageT=t;return}if(t&&t<stageT)return;stage=x.stage;stageT=t||Date.now();render();window.scrollTo(0,0)}
+function take(x,db){if(!x||typeof x.stage!=='number')return;const t=tsOf(x);if(x.stage===stage){if(db||t>stageT)stageT=t;return}if(!db&&t<stageT)return;stage=x.stage;stageT=t;render();window.scrollTo(0,0)}
 async function poll(){if(pollBusy)return;pollBusy=true;clearTimeout(pollT);pollN++;
   try{const a=SJ?await tget(SJ+'?v='+Date.now()):null;take(a);
-    if(!a||typeof a.stage!=='number'||pollN%4===0)take(await tget(base+'/api/stage'))}
+    if(!a||typeof a.stage!=='number'||pollN%4===0)take(await tget(base+'/api/stage'),true)}
   catch(e){}finally{pollBusy=false;pollT=setTimeout(poll,3000)}}
 const wake=()=>{if(document.visibilityState!=='hidden'){pollN=3;poll()}};
 document.addEventListener('visibilitychange',wake);window.addEventListener('focus',wake);window.addEventListener('pageshow',wake);
