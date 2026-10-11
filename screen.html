@@ -26,21 +26,22 @@ const CFG={"key":null,"api":"https://tzacvgixagqfydugnfdk.supabase.co/functions/
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pct=(v,t)=>t?Math.round(v/t*100):0;
 function bars(obj,total,cls){obj=obj||{};const max=Math.max(1,...Object.values(obj));return Object.entries(obj).map(([k,v])=>'<div class="row '+((cls&&cls[k])||'')+'"><span>'+esc(k)+'</span><div class="b"><i style="width:'+(v/max*100)+'%"></i></div><span class="n">'+pct(v,total)+'%<small>'+v+'</small></span></div>').join('')}
-function pp(sh,label){if(!sh||!sh.n)return '<p class="vs">Waiting for both answers.</p>';return '<div class="pp"><div><b>'+sh.pre+'</b><div class="col" style="height:'+(sh.pre/10*300)+'px"></div>Before</div><div><b>'+sh.post+'</b><div class="col post" style="height:'+(sh.post/10*300)+'px"></div>After</div></div><p class="foot">'+label+' · '+sh.n+' people answered both · '+sh.up+' went up, '+sh.same+' stayed, '+sh.down+' went down</p>'}
+function pp(sh,label){if(!sh||!sh.n)return '<p class="vs">Waiting for both answers.</p>';return '<div class="pp"><div><b>'+sh.pre+'</b><div class="col" style="height:'+(sh.pre/5*300)+'px"></div>Before</div><div><b>'+sh.post+'</b><div class="col post" style="height:'+(sh.post/5*300)+'px"></div>After</div></div><p class="foot">'+label+' · '+sh.n+' people answered both · '+sh.up+' went up, '+sh.same+' stayed, '+sh.down+' went down</p>'}
 const S=[
- r=>'<p class="kicker">This room</p><h1>Put off an AI tool they believe would help</h1><div class="big">'+r.q5_yes+'%</div><p class="vs">of '+r.answered.q5+' · <b>the paper\'s panel: 62%</b></p>',
- r=>'<p class="kicker">This room</p><h1>The one we let ourselves get away with</h1>'+bars(r.choice.q1,r.answered.q1,{'Helping someone else with their problem instead of my own':'hot'})+'<p class="foot">Sometimes procrastination looks remarkably like work.</p>',
- r=>'<p class="kicker">This room</p><h1>Other things, right now</h1>'+bars(r.choice.q2,r.answered.q2),
+ r=>'<p class="kicker">This room</p><h1>Preferred form of procrastination</h1>'+bars(r.choice.q1,r.answered.q1),
+ r=>'<p class="kicker">This room</p><h1>How much are you multitasking?</h1>'+bars(r.choice.q2,r.answered.q2),
  r=>'<p class="kicker">This room</p><h1>Biggest uncertainty at work</h1>'+bars(r.choice.q3,r.answered.q3,{AI:'hot'}),
- r=>'<p class="kicker">This room</p><h1>Think versus feel</h1><p class="vs">When you think about AI at work</p>'+bars(r.choice.q4t,r.answered.q4t,{'Mostly a threat':'hot'})+'<p class="vs">And in your gut</p>'+bars(r.choice.q4,r.answered.q4,{'Mostly uneasy':'hot'})+'<p class="foot">The thought versus felt gap, live.</p>',
+ r=>'<p class="kicker">This room</p><h1>AI and your job: think</h1>'+bars(r.choice.q4t,r.answered.q4t)+'<h1 style="margin-top:20px">And feel</h1>'+bars(r.choice.q4,r.answered.q4),
+ r=>'<p class="kicker">This room</p><h1>Where are you on the AI curve?</h1>'+bars(r.choice.q5,r.answered.q5),
  r=>'<p class="kicker">This room</p><h1>Which one are you, today?</h1>'+bars(r.choice.quadrant,r.answered.quadrant,{'The Curious Experimenter':'hot'}),
- r=>'<p class="kicker">This room</p><h1>How long it has been waiting</h1>'+bars(r.choice.hold,r.answered.hold,{'Longer than I\'d like to admit':'hot'}),
- r=>'<p class="kicker">This room</p><h1>Attention, or space?</h1>'+bars(r.choice.s1,r.answered.s1,{'Only more attention':'hot'})+bars(r.choice.s2,r.answered.s2),
- r=>'<p class="kicker">This room</p><h1>What it felt like underneath</h1>'+bars(r.ffs,r.answered.b4,{Fear:'hot'})+'<p class="foot">What if this exposes me · I don\'t know what to do with it · Nothing is moving</p>',
- r=>'<p class="kicker">Before and after</p><h1>Confidence you\'ll start this week</h1>'+pp(r.shift.confidence,'0 to 10'),
- r=>'<p class="kicker">Before and after</p><h1>Curiosity about it</h1>'+pp(r.shift.curiosity,'0 to 10'),
- r=>'<p class="kicker">This room</p><h1>Does the thing feel any different?</h1>'+bars(r.choice.b16,r.answered.b16,{Smaller:'hot'})+'<p class="foot">Twenty minutes. Four questions. A taste, not a study.</p>',
- r=>'<p class="kicker">Three first moves, from the room</p><h1>Someone here wrote this</h1><ul>'+(r.texts.p2||[]).filter(t=>!t.hidden).slice(0,3).map(t=>'<li>'+esc(t.text)+'</li>').join('')+'</ul><p class="foot">No names. Nobody knows who.</p>',
+ r=>'<p class="kicker">This room</p><h1>Attention, or exploration?</h1>'+bars(r.choice.s1,r.answered.s1),
+ r=>'<p class="kicker">This room</p><h1>Procrastination time you would give it</h1>'+bars(r.choice.l2,r.answered.l2),
+ r=>'<p class="kicker">This room</p><h1>When will you begin?</h1>'+bars(r.choice.l3,r.answered.l3),
+ r=>'<p class="kicker">Before and after</p><h1>Likely to start this week</h1>'+pp(r.shift.likelihood,'1 to 5'),
+ r=>'<p class="kicker">Before and after</p><h1>Confident you would know where to start</h1>'+pp(r.shift.confidence,'1 to 5'),
+ r=>'<p class="kicker">Before and after</p><h1>Curiosity about it</h1>'+pp(r.shift.curiosity,'1 to 5'),
+ r=>'<p class="kicker">This room</p><h1>What would it cost you?</h1>'+bars(r.choice.p3,r.answered.p3,{'Nothing, honestly':'hot'}),
+ r=>'<p class="kicker">This room</p><h1>Has an idea emerged?</h1>'+bars(r.choice.emerged,r.answered.emerged,{Yes:'hot'}),
 ];
 function draw(){if(!R)return;document.getElementById('wrap').innerHTML=S[i](R);document.getElementById('ix').textContent=(i+1)+'/'+S.length+' · '+R.n+' people'}
 async function tick(){try{const r=await fetch(base+'/api/results',{headers:{'x-pn-key':K},cache:'no-store'});R=await r.json();draw()}catch(e){}setTimeout(tick,4000)}
