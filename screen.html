@@ -28,12 +28,14 @@ const pct=(v,t)=>t?Math.round(v/t*100):0;
 function bars(obj,total,cls){obj=obj||{};const max=Math.max(1,...Object.values(obj));return Object.entries(obj).map(([k,v])=>'<div class="row '+((cls&&cls[k])||'')+'"><span>'+esc(k)+'</span><div class="b"><i style="width:'+(v/max*100)+'%"></i></div><span class="n">'+pct(v,total)+'%<small>'+v+'</small></span></div>').join('')}
 function pp(sh,label){if(!sh||!sh.n)return '<p class="vs">Waiting for both answers.</p>';return '<div class="pp"><div><b>'+sh.pre+'</b><div class="col" style="height:'+(sh.pre/10*300)+'px"></div>Before</div><div><b>'+sh.post+'</b><div class="col post" style="height:'+(sh.post/10*300)+'px"></div>After</div></div><p class="foot">'+label+' · '+sh.n+' people answered both · '+sh.up+' went up, '+sh.same+' stayed, '+sh.down+' went down</p>'}
 const S=[
- r=>'<p class="kicker">This room</p><h1>Procrastinating about AI tools</h1><div class="big">'+r.q5_yes+'%</div><p class="vs">yes or partly, of '+r.answered.q5+' · <b>the paper said 62%</b></p>',
- r=>'<p class="kicker">This room</p><h1>Most common procrastination</h1>'+bars(r.choice.q1,r.answered.q1,{'Helping someone else':'hot'})+'<p class="foot">Sometimes procrastination looks remarkably like work.</p>',
+ r=>'<p class="kicker">This room</p><h1>Put off an AI tool they believe would help</h1><div class="big">'+r.q5_yes+'%</div><p class="vs">of '+r.answered.q5+' · <b>the paper\'s panel: 62%</b></p>',
+ r=>'<p class="kicker">This room</p><h1>The one we let ourselves get away with</h1>'+bars(r.choice.q1,r.answered.q1,{'Helping someone else with their problem instead of my own':'hot'})+'<p class="foot">Sometimes procrastination looks remarkably like work.</p>',
  r=>'<p class="kicker">This room</p><h1>Other things, right now</h1>'+bars(r.choice.q2,r.answered.q2),
  r=>'<p class="kicker">This room</p><h1>Biggest uncertainty at work</h1>'+bars(r.choice.q3,r.answered.q3,{AI:'hot'}),
- r=>'<p class="kicker">This room</p><h1>Using AI, I feel</h1>'+bars(r.choice.q4,r.answered.q4),
+ r=>'<p class="kicker">This room</p><h1>Think versus feel</h1><p class="vs">When you think about AI at work</p>'+bars(r.choice.q4t,r.answered.q4t,{'Mostly a threat':'hot'})+'<p class="vs">And in your gut</p>'+bars(r.choice.q4,r.answered.q4,{'Mostly uneasy':'hot'})+'<p class="foot">The thought versus felt gap, live.</p>',
  r=>'<p class="kicker">This room</p><h1>Which one are you, today?</h1>'+bars(r.choice.quadrant,r.answered.quadrant,{'The Curious Experimenter':'hot'}),
+ r=>'<p class="kicker">This room</p><h1>How long it has been waiting</h1>'+bars(r.choice.hold,r.answered.hold,{'Longer than I\'d like to admit':'hot'}),
+ r=>'<p class="kicker">This room</p><h1>Attention, or space?</h1>'+bars(r.choice.s1,r.answered.s1,{'Only more attention':'hot'})+bars(r.choice.s2,r.answered.s2),
  r=>'<p class="kicker">This room</p><h1>What it felt like underneath</h1>'+bars(r.ffs,r.answered.b4,{Fear:'hot'})+'<p class="foot">What if this exposes me · I don\'t know what to do with it · Nothing is moving</p>',
  r=>'<p class="kicker">Before and after</p><h1>Confidence you\'ll start this week</h1>'+pp(r.shift.confidence,'0 to 10'),
  r=>'<p class="kicker">Before and after</p><h1>Curiosity about it</h1>'+pp(r.shift.curiosity,'0 to 10'),
