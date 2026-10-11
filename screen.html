@@ -22,7 +22,7 @@ ul{list-style:none;margin:0;padding:0}li{font-size:30px;line-height:1.3;padding:
 </style></head><body>
 <div id="wrap"></div><div id="ix"></div>
 <script>
-const CFG={"key":null,"api":"https://tzacvgixagqfydugnfdk.supabase.co/functions/v1/pn"};const K=CFG.key||new URLSearchParams(location.search).get('k')||'';const base=CFG.api||location.pathname.replace(/\/screen\/?$/,'');let R=null,i=0;
+const CFG={"key":null,"api":"https://tzacvgixagqfydugnfdk.supabase.co/functions/v1/pn"};let K=CFG.key||'';try{K=K||sessionStorage.getItem('pn_k')||''}catch(e){}if(!K)K=(prompt('Host key')||'').trim();const base=CFG.api||location.pathname.replace(/\/screen\/?$/,'');let R=null,i=0;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pct=(v,t)=>t?Math.round(v/t*100):0;
 function bars(obj,total,cls){obj=obj||{};const max=Math.max(1,...Object.values(obj));return Object.entries(obj).map(([k,v])=>'<div class="row '+((cls&&cls[k])||'')+'"><span>'+esc(k)+'</span><div class="b"><i style="width:'+(v/max*100)+'%"></i></div><span class="n">'+pct(v,total)+'%<small>'+v+'</small></span></div>').join('')}
