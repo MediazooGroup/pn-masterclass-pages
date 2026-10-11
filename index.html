@@ -125,6 +125,6 @@ async function poll(){if(pollBusy)return;pollBusy=true;clearTimeout(pollT);pollN
     if(!a||typeof a.stage!=='number'||pollN%4===0)take(await tget(base+'/api/stage'),true)}
   catch(e){}finally{pollBusy=false;pollT=setTimeout(poll,3000)}}
 const wake=()=>{if(document.visibilityState!=='hidden'){pollN=3;poll()}};
-document.addEventListener('visibilitychange',wake);window.addEventListener('focus',wake);window.addEventListener('pageshow',wake);
+document.addEventListener('visibilitychange',wake);window.addEventListener('focus',wake);window.addEventListener('pageshow',wake);document.addEventListener('resume',wake);
 poll();setInterval(flush,4000);
 </script></body></html>
