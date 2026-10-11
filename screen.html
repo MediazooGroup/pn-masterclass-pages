@@ -39,7 +39,7 @@ const S=[
  r=>'<p class="kicker">This room</p><h1>What it felt like underneath</h1>'+bars(r.ffs,r.answered.b4,{Fear:'hot'})+'<p class="foot">What if this exposes me · I don\'t know what to do with it · Nothing is moving</p>',
  r=>'<p class="kicker">Before and after</p><h1>Confidence you\'ll start this week</h1>'+pp(r.shift.confidence,'0 to 10'),
  r=>'<p class="kicker">Before and after</p><h1>Curiosity about it</h1>'+pp(r.shift.curiosity,'0 to 10'),
- r=>'<p class="kicker">This room</p><h1>Did you feel a shift?</h1>'+bars(r.choice.b16,r.answered.b16,{Yes:'hot'})+'<p class="foot">Twenty minutes. Four questions. A taste, not a study.</p>',
+ r=>'<p class="kicker">This room</p><h1>Does the thing feel any different?</h1>'+bars(r.choice.b16,r.answered.b16,{Smaller:'hot'})+'<p class="foot">Twenty minutes. Four questions. A taste, not a study.</p>',
  r=>'<p class="kicker">Three first moves, from the room</p><h1>Someone here wrote this</h1><ul>'+(r.texts.p2||[]).filter(t=>!t.hidden).slice(0,3).map(t=>'<li>'+esc(t.text)+'</li>').join('')+'</ul><p class="foot">No names. Nobody knows who.</p>',
 ];
 function draw(){if(!R)return;document.getElementById('wrap').innerHTML=S[i](R);document.getElementById('ix').textContent=(i+1)+'/'+S.length+' · '+R.n+' people'}
